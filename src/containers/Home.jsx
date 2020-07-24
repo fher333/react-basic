@@ -8,6 +8,7 @@ import CarouselItem from '../components/CarouselItem';
 import useInitialState from '../hooks/useInitialState';
 import '../assets/styles/App.scss';
 
+// en el componente Home es necesario traer los elementos que se tienen como props
 const Home = ({ myList, trends, originals}) => {
   return (
     <>
@@ -15,9 +16,14 @@ const Home = ({ myList, trends, originals}) => {
       { myList.length > 0 && 
       <Categories title="Mi Lista">
         <Carousel>
-            {myList.map((item) => <CarouselItem key={item.id} {...item} />)}
-          </Carousel>
-        </Categories>
+          {myList.map((item) =>
+            <CarouselItem
+              key={item.id}
+              {...item}
+              isList
+             />)}
+        </Carousel>
+      </Categories>
       }
       <Categories title="Tendencias">
         <Carousel>
@@ -32,7 +38,7 @@ const Home = ({ myList, trends, originals}) => {
     </>
   );
 }
-
+// traer del estado los elementos que necesito 
 const mapStateToProps = (state) => {
   return {
     myList: state.myList,
@@ -40,4 +46,5 @@ const mapStateToProps = (state) => {
     originals: state.originals,
   };
 };
+//el export se adiciona el connect para poder usar los estados  desde el home
 export default connect(mapStateToProps, null)(Home);
